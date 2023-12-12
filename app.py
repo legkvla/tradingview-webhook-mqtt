@@ -26,7 +26,8 @@ node = Node(node_name='tradingview.signals',
             host=MQTT_HOST,
             port=MQTT_PORT,
             username=MQTT_USERNAME,
-            password=MQTT_PASSWORD
+            password=MQTT_PASSWORD,
+            ssl=True
         ),
         debug=True)
 
@@ -55,7 +56,7 @@ async def webhook(request: Request):
         if key == SEC_KEY:
             if 'data' not in data:
                 raise ValueError(
-                    'Wring Alert message format, "data" field not found!')
+                    'Wrong Alert message format, "data" field not found!')
                 return 400
             msg = TradingViewAlert(data=data['data'])
             if 'topic' in data:
