@@ -21,17 +21,16 @@ class TradingViewAlert(PubSubMessage):
 
 app = FastAPI()
 
-def init():
-    node = Node(node_name='sensors.sonar.front',
-                connection_params=ConnectionParameters(
-                    host=MQTT_HOST,
-                    port=MQTT_PORT,
-                    username=MQTT_USERNAME,
-                    password=MQTT_PASSWORD
-                ),
-                debug=False)
+node = Node(node_name='tradingview.signals',
+        connection_params=ConnectionParameters(
+            host=MQTT_HOST,
+            port=MQTT_PORT,
+            username=MQTT_USERNAME,
+            password=MQTT_PASSWORD
+        ),
+        debug=True)
 
-    mqtt_pub = node.create_mpublisher()
+mqtt_pub = node.create_mpublisher()
 
 
 @app.get("/")
