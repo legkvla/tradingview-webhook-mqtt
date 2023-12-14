@@ -2,5 +2,5 @@
 fastapi==0.95.0
 uvicorn
 pydantic
-commlib-py==0.10.6
+paho-mqtt=1.6.1
 python-dotenv
