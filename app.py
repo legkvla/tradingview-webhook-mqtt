@@ -5,10 +5,11 @@ from fastapi import FastAPI, Request
 import redis
 
 SEC_KEY=os.getenv("SEC_KEY", 'DEFAULT_KEY')
+REDIS_URL=os.getenv("REDIS_TLS_URL", '')
 
 app = FastAPI()
 
-r = redis.Redis(host='localhost', port=6379, db=0)
+r = redis.from_url(REDIS_URL)
 
 def try_redis():
     r.set('foo', 'bar')
