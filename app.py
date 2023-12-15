@@ -1,10 +1,18 @@
+import json
 import os
 import time
 from fastapi import FastAPI, Request
+import redis
 
 SEC_KEY=os.getenv("SEC_KEY", 'DEFAULT_KEY')
 
 app = FastAPI()
+
+r = redis.Redis(host='localhost', port=6379, db=0)
+
+def try_redis():
+    r.set('foo', 'bar')
+    return r.get('foo')
 
 @app.get("/")
 async def root():
@@ -30,6 +38,15 @@ async def webhook(request: Request):
                 return 400
             data = data['data']
             print(f'Publishing TradingView Alert {data}')
-            return 200
+            r.lpush('signals', json.dumps(data))
+            return {"success": True}
         else:
             return 400
+
+@app.post("/pop-event")
+async def pop_event():
+    event = r.rpop('signals')
+    if event is not None:
+        return json.loads(event)
+    else:
+        return {"empty": True}
