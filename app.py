@@ -1,15 +1,16 @@
 import json
 import os
-import time
 from fastapi import FastAPI, Request
 import redis
+from urllib.parse import urlparse
 
 SEC_KEY=os.getenv("SEC_KEY", 'DEFAULT_KEY')
 REDIS_URL=os.getenv("REDIS_TLS_URL", '')
 
 app = FastAPI()
 
-r = redis.from_url(REDIS_URL)
+url = urlparse(REDIS_URL)
+r = redis.Redis(host=url.hostname, port=url.port, password=url.password, ssl=True, ssl_cert_reqs=None)
 
 def try_redis():
     r.set('foo', 'bar')
@@ -45,9 +46,16 @@ async def webhook(request: Request):
             return 400
 
 @app.post("/pop-event")
-async def pop_event():
-    event = r.rpop('signals')
-    if event is not None:
-        return json.loads(event)
+async def pop_event(request: Request):
+    data = await request.json()
+    if 'key' not in data:
+        return 400
+    key = data['key']
+    if key == SEC_KEY:
+        event = r.rpop('signals')
+        if event is not None:
+            return json.loads(event)
+        else:
+            return {"empty": True}
     else:
-        return {"empty": True}
+        return 400
