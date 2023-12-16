@@ -12,9 +12,15 @@ app = FastAPI()
 url = urlparse(REDIS_URL)
 r = redis.Redis(host=url.hostname, port=url.port, password=url.password, ssl=True, ssl_cert_reqs=None)
 
-def try_redis():
-    r.set('foo', 'bar')
-    return r.get('foo')
+def a_pop():
+    return r.brpop('signals', 0)
+
+def a_pop_loop():
+    while True:
+        e = a_pop()
+        if e is not None:
+            # j = json.dumps(e[1].decode())
+            print(f'Event: {e[1].decode()}')
 
 @app.get("/")
 async def root():
