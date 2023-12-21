@@ -19,9 +19,18 @@ The current implementation requires TV Alert messages to be defined in `applicat
 ```json
 {
     "key": "SECURITY_KEY",
-    "data": {}
+    "data":
+    {
+      "signal-id" : "signal1",
+      "ticker" : "ETH/USD",
+      "strategy-order-action": "buy",
+      "strategy-order-price": 1.1234,
+      "strategy-prev_market_position": "flat"
+    }
 }
 ```
+
+strategy-prev_market_position can be used to distinguish position opening from closing.
 
 The `key` property of alert messages is mandatory in order to allow access to
 the webhook server, as it implements a lightweight authorization layer. The
