@@ -1,6 +1,6 @@
 import json
 import os
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, HTTPException
 import redis
 from urllib.parse import urlparse
 
@@ -34,28 +34,27 @@ async def webhook(request: Request):
     pparams = request.path_params
 
     if 'text/plain' in headers['content-type']:
-        raise ValueError('Alert Message must be of type application/json')
+        raise HTTPException(status_code=400, detail='Alert Message must be of type application/json')
     elif 'application/json' in headers['content-type']:
         data = await request.json()
         if 'key' not in data:
-            raise ValueError('Missing key!')
+            raise HTTPException(status_code=401, detail='Missing auth key')
         key = data['key']
         if key == SEC_KEY:
             if 'data' not in data:
-                raise ValueError('Wrong Alert message format, "data" field not found!')
-                return 400
+                raise HTTPException(status_code=400, detail='Wrong Alert message format, "data" field not found!')
             data = data['data']
             print(f'Publishing TradingView Alert {data}')
             r.lpush('signals', json.dumps(data))
             return {"success": True}
         else:
-            return 400
+            raise HTTPException(status_code=401, detail='Wrong auth key')
 
 @app.post("/pop-event")
 async def pop_event(request: Request):
     data = await request.json()
     if 'key' not in data:
-        return 400
+        raise HTTPException(status_code=401, detail='Missing auth key')
     key = data['key']
     if key == SEC_KEY:
         event = r.rpop('signals')
@@ -64,4 +63,4 @@ async def pop_event(request: Request):
         else:
             return {"empty": True}
     else:
-        return 400
+        raise HTTPException(status_code=401, detail='Wrong auth key')
