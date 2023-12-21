@@ -26,8 +26,8 @@ def send_signal(ev):
             "symbol": ev['ticker'],
             "side": ev['strategy-order-action'],
             "price": ev['strategy-order-price'],
-            "sl-offset": ev['sl-offset'],
-            "tp-offset": ev['tp-offset']
+            "sl-offset": ev.get('sl-offset'),
+            "tp-offset": ev.get('tp-offset')
         }
         response = requests.post(url, json=data, headers=headers)
 
