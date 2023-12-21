@@ -21,6 +21,7 @@ The current implementation requires TV Alert messages to be defined in `applicat
     "key": "SECURITY_KEY",
     "data":
     {
+      "heartbeat" : "false",
       "signal-id" : "signal1",
       "ticker" : "ETH/USD",
       "strategy-order-action": "buy",

@@ -2,3 +2,4 @@
 fastapi==0.95.0
 uvicorn
 redis==5.0.1
+requests
