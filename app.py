@@ -16,6 +16,9 @@ def a_pop():
     return r.brpop('signals', 0)
 
 def send_signal(ev):
+    #Filtering positions closing
+    if ev.get('strategy-prev_market_position') != 'flat':
+        return
     url = "http://localhost:3002/trading/signals"
     headers = {"Content-Type": "application/json"}
     try:
