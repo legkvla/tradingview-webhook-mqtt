@@ -22,7 +22,7 @@ The current implementation requires TV Alert messages to be defined in `applicat
     "data":
     {
       "heartbeat" : "false",
-      "signal-id" : "signal1",
+      "strategy-id" : "s1",
       "ticker" : "ETH/USD",
       "strategy-order-action": "buy",
       "strategy-order-price": 1.1234,

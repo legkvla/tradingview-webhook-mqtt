@@ -25,7 +25,7 @@ def send_signal(ev):
         data = {
             "heartbeat": ev.get('heartbeat', False),
             "ttl": ev['ttl'],
-            "signal-id": ev['signal-id'],
+            "strategy-id": ev['strategy-id'],
             "symbol": ev['ticker'],
             "side": ev['strategy-order-action'],
             "price": ev['strategy-order-price'],
