@@ -26,7 +26,9 @@ The current implementation requires TV Alert messages to be defined in `applicat
       "ticker" : "ETH/USD",
       "strategy-order-action": "buy",
       "strategy-order-price": 1.1234,
-      "strategy-prev_market_position": "flat"
+      "strategy-prev_market_position": "flat",
+      "sl-offset": 0.002,
+      "tp-offset": 0.001
     }
 }
 ```
