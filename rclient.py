@@ -1,6 +1,7 @@
 import json
 import os
 import redis
+import requests
 
 from dotenv import load_dotenv
 from urllib.parse import urlparse
