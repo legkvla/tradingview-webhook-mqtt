@@ -6,6 +6,9 @@ import time
 
 from urllib.parse import urlparse
 
+# No load_dotenv here like in rclient because we expect this script
+# run by Heroku (or Docker) with exported vars
+
 SEC_KEY=os.getenv("SEC_KEY", 'DEFAULT_KEY')
 REDIS_URL=os.getenv("REDIS_TLS_URL", '')
 
@@ -16,9 +19,6 @@ app = FastAPI()
 
 url = urlparse(REDIS_URL)
 r = redis.Redis(host=url.hostname, port=url.port, password=url.password, ssl=True, ssl_cert_reqs=None)
-
-def a_pop():
-    return r.brpop('signals', 0)
 
 @app.get("/")
 async def root():

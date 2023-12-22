@@ -1,4 +1,15 @@
-import app
+import os
+import redis
+
+from dotenv import load_dotenv
+from urllib.parse import urlparse
+
+load_dotenv()
+
+REDIS_URL=os.getenv("REDIS_TLS_URL", '')
+
+url = urlparse(REDIS_URL)
+r = redis.Redis(host=url.hostname, port=url.port, password=url.password, ssl=True, ssl_cert_reqs=None)
 
 def send_signal(ev):
     #Filtering positions closing
@@ -32,7 +43,7 @@ def send_signal(ev):
 
 def main():
     while True:
-        e = app.a_pop()
+        e = r.brpop('signals', 0)
         if e is not None:
             # j = json.dumps(e[1].decode())
             msg = e[1].decode()
