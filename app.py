@@ -2,10 +2,15 @@ import json
 import os
 from fastapi import FastAPI, Request, HTTPException
 import redis
+import time
+
 from urllib.parse import urlparse
 
 SEC_KEY=os.getenv("SEC_KEY", 'DEFAULT_KEY')
 REDIS_URL=os.getenv("REDIS_TLS_URL", '')
+
+def current_milli_time():
+    return round(time.time() * 1000)
 
 app = FastAPI()
 
@@ -76,6 +81,7 @@ async def webhook(request: Request):
             if 'data' not in data:
                 raise HTTPException(status_code=400, detail='Wrong Alert message format, "data" field not found!')
             data = data['data']
+            data['ttl'] = current_milli_time() + 120 * 1000
             print(f'Publishing TradingView Alert {data}')
             r.lpush('signals', json.dumps(data))
             return {"success": True}
