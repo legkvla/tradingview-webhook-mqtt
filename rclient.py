@@ -39,5 +39,5 @@ def main():
             print(f'Event: {msg}')
             send_signal(json.loads(msg))
 
-if __name__ == “__main__”:
+if __name__ == "__main__":
     main()
