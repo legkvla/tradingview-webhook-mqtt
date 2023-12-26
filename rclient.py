@@ -8,18 +8,31 @@ from urllib.parse import urlparse
 
 load_dotenv()
 
+SEC_KEY=os.getenv("SEC_KEY", 'DEFAULT_KEY')
 REDIS_URL=os.getenv("REDIS_TLS_URL", '')
 
 url = urlparse(REDIS_URL)
 r = redis.Redis(host=url.hostname, port=url.port, password=url.password, ssl=True, ssl_cert_reqs=None)
+
+auth_token = None
+
+def get_auth_token():
+    global auth_token
+    if auth_token is None:
+        url = "http://localhost:3002/auth/login-token"
+        headers = {"Content-Type": "application/json"}
+        data = {'token': SEC_KEY}
+        response = requests.post(url, json=data, headers=headers)
+        auth_token = response.json()['jwt-token']
+    return auth_token
 
 def send_signal(ev):
     #Filtering positions closing
     if ev.get('strategy-prev_market_position') != 'flat':
         return
     url = "http://localhost:3002/trading/signals"
-    headers = {"Content-Type": "application/json"}
     try:
+        headers = {"Content-Type": "application/json", "Authorization": "Token " + get_auth_token()}
         data = {
             "heartbeat": ev.get('heartbeat', False),
             "ttl": ev['ttl'],
