@@ -2,6 +2,7 @@ import json
 import os
 import redis
 import requests
+import traceback
 
 from dotenv import load_dotenv
 from urllib.parse import urlparse
@@ -55,6 +56,7 @@ def send_signal(ev):
 
     except Exception as e:
         print(f"Request failed: {e}")
+        traceback.print_exc()
 
 def main():
     while True:
