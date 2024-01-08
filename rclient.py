@@ -1,5 +1,10 @@
-import json
+import sys
 import os
+
+curr_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, curr_dir+"/deps")
+
+import json
 import redis
 import requests
 import traceback
