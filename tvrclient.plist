@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <!-- ~/Library/LaunchAgents -->
+  <key>Label</key>
+  <string>tvrclient</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>./tv-events-client.sh</string>
+  </array>
+  <key>StandardOutPath</key>
+  <string>/Users/vl/dev/trading/tradingview-webhook-mqtt/out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/vl/dev/trading/tradingview-webhook-mqtt/err.log</string>
+  <key>RunAtLoad</key>
+  <true/> <!-- run the program at login -->
+  <key>KeepAlive</key>
+  <true/> <!-- run the program again if it terminates -->
+  <key>WorkingDirectory</key>
+  <string>/Users/vl/dev/trading/tradingview-webhook-mqtt</string>
+</dict>
+</plist>
