@@ -1,0 +1,8 @@
+# app
+async_timeout
+fastapi==0.95.0
+urllib3==1.26.6
+uvicorn
+redis==5.0.1
+requests
+python-dotenv
