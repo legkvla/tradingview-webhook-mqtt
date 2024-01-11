@@ -1,0 +1,1 @@
+launchctl stop rclient
