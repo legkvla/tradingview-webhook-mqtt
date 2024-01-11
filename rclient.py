@@ -45,7 +45,7 @@ def send_signal(ev):
             "strategy-id": ev['strategy-id'],
             "symbol": ev['ticker'],
             "side": ev['strategy-order-action'],
-            "price": ev['strategy-order-price'],
+            "price": float(ev['strategy-order-price']),
             "sl-offset": ev.get('sl-offset'),
             "tp-offset": ev.get('tp-offset')
         }

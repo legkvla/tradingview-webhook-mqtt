@@ -5,7 +5,7 @@
       "strategy-id" : "fibrsi-EURUSD",
       "ticker" : "{{ticker}}",
       "strategy-order-action": "{{strategy.order.action}}",
-      "strategy-order-price": {{strategy.order.price}},
+      "strategy-order-price": "{{strategy.order.price}}",
       "strategy-prev_market_position": "{{strategy.prev_market_position}}",
       "sl-offset": 0.002,
       "tp-offset": 0.001
