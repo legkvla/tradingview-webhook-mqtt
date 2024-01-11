@@ -1,1 +1,1 @@
-launchctl stop rclient
+launchctl stop tvrclient
