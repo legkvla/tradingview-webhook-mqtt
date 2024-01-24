@@ -18,18 +18,35 @@ The current implementation requires TV Alert messages to be defined in `applicat
 
 ```json
 {
-    "key": "SECURITY_KEY",
     "data":
     {
-      "heartbeat" : "false",
+      "heartbeat" : false,
       "strategy-id" : "s1",
-      "ticker" : "ETH/USD",
+      "ticker" : "EUR/USD",
       "strategy-order-action": "buy",
       "strategy-order-price": 1.1234,
       "strategy-prev_market_position": "flat",
       "sl-offset": 0.002,
       "tp-offset": 0.001
-    }
+    },
+    "key": "SECURITY_KEY"
+}
+```
+
+```json
+{
+    "data":
+    {
+      "heartbeat" : false,
+      "strategy-id" : "fibrsi-EURUSD",
+      "ticker" : "{{ticker}}",
+      "strategy-order-action": "{{strategy.order.action}}",
+      "strategy-order-price": "{{strategy.order.price}}",
+      "strategy-prev_market_position": "{{strategy.prev_market_position}}",
+      "sl-offset": 0.003,
+      "tp-offset": 0.001
+    },
+    "key": "{{sec_key}}"
 }
 ```
 
