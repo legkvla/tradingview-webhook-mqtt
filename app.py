@@ -49,17 +49,17 @@ async def webhook(request: Request):
         else:
             raise HTTPException(status_code=401, detail='Wrong auth key')
 
-# @app.post("/pop-event")
-# async def pop_event(request: Request):
-#     data = await request.json()
-#     if 'key' not in data:
-#         raise HTTPException(status_code=401, detail='Missing auth key')
-#     key = data['key']
-#     if key == SEC_KEY:
-#         event = r.rpop('signals')
-#         if event is not None:
-#             return json.loads(event)
-#         else:
-#             return {"empty": True}
-#     else:
-#         raise HTTPException(status_code=401, detail='Wrong auth key')
+@app.post("/pop-event")
+async def pop_event(request: Request):
+    data = await request.json()
+    if 'key' not in data:
+        raise HTTPException(status_code=401, detail='Missing auth key')
+    key = data['key']
+    if key == SEC_KEY:
+        event = r.rpop('signals')
+        if event is not None:
+            return json.loads(event)
+        else:
+            return {"empty": True}
+    else:
+        raise HTTPException(status_code=401, detail='Wrong auth key')
