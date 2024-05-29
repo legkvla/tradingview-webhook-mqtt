@@ -20,14 +20,14 @@ The current implementation requires TV Alert messages to be defined in `applicat
 {
     "data":
     {
+      "strategy-order-action": "buy",
+      "strategy-order-price": 1.1234,
+      "sl-offset": 0.002,
+      "tp-offset": 0.001,
       "heartbeat" : false,
       "strategy-id" : "s1",
       "ticker" : "EUR/USD",
-      "strategy-order-action": "buy",
-      "strategy-order-price": 1.1234,
-      "strategy-prev_market_position": "flat",
-      "sl-offset": 0.002,
-      "tp-offset": 0.001
+      "strategy-prev_market_position": "flat"
     },
     "key": "SECURITY_KEY"
 }
@@ -39,14 +39,14 @@ The current implementation requires TV Alert messages to be defined in `applicat
 {
     "data":
     {
+      "strategy-order-action": "{{strategy.order.action}}",
+      "strategy-order-price": "{{strategy.order.price}}",
+      "sl-offset": 0.003,
+      "tp-offset": 0.001,
       "heartbeat" : false,
       "strategy-id" : "fibrsi-EURUSD",
       "ticker" : "{{ticker}}",
-      "strategy-order-action": "{{strategy.order.action}}",
-      "strategy-order-price": "{{strategy.order.price}}",
-      "strategy-prev_market_position": "{{strategy.prev_market_position}}",
-      "sl-offset": 0.003,
-      "tp-offset": 0.001
+      "strategy-prev_market_position": "{{strategy.prev_market_position}}"
     },
     "key": "{{sec_key}}"
 }
