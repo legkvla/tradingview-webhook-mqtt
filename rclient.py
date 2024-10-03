@@ -34,8 +34,9 @@ def get_auth_token():
 
 def send_signal(ev):
     #Filtering positions closing
-    if ev.get('strategy-prev_market_position') != 'flat':
-        return
+    # if ev.get('strategy-prev_market_position') != 'flat':
+    #     return
+    
     url = "http://localhost:3002/trading/signals"
     try:
         headers = {"Content-Type": "application/json", "Authorization": "Token " + get_auth_token()}
@@ -47,7 +48,8 @@ def send_signal(ev):
             "side": ev['strategy-order-action'],
             "price": float(ev['strategy-order-price']),
             "sl-offset": ev.get('sl-offset'),
-            "tp-offset": ev.get('tp-offset')
+            "tp-offset": ev.get('tp-offset'),
+            "signal-kind": ev.get('strategy-prev_market_position') == 'flat' ? 'open' : 'close'
         }
         response = requests.post(url, json=data, headers=headers)
 
