@@ -49,7 +49,7 @@ def send_signal(ev):
             "price": float(ev['strategy-order-price']),
             "sl-offset": ev.get('sl-offset'),
             "tp-offset": ev.get('tp-offset'),
-            "signal-kind": ev.get('strategy-prev_market_position') == 'flat' ? 'open' : 'close'
+            "signal-kind": 'open' if ev.get('strategy-prev_market_position') == 'flat' else 'close'
         }
         response = requests.post(url, json=data, headers=headers)
 
