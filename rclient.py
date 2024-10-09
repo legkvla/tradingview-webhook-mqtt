@@ -32,16 +32,23 @@ def get_auth_token():
         auth_token = response.json()['jwt-token']
     return auth_token
 
+def resolve_signal_kind(ev):
+    if ev.get('heartbeat', False):
+        return 'heartbeat'
+    elif ev.get('strategy-prev_market_position') == 'flat':
+        return 'open'
+    else:
+        return 'close'
+
 def send_signal(ev):
     #Filtering positions closing
     # if ev.get('strategy-prev_market_position') != 'flat':
     #     return
-    
+
     url = "http://localhost:3002/trading/signals"
     try:
         headers = {"Content-Type": "application/json", "Authorization": "Token " + get_auth_token()}
         data = {
-            "heartbeat": ev.get('heartbeat', False),
             "ttl": ev['ttl'],
             "strategy-id": ev['strategy-id'],
             "symbol": ev['ticker'],
@@ -49,7 +56,7 @@ def send_signal(ev):
             "price": float(ev['strategy-order-price']),
             "sl-offset": ev.get('sl-offset'),
             "tp-offset": ev.get('tp-offset'),
-            "signal-kind": 'open' if ev.get('strategy-prev_market_position') == 'flat' else 'close'
+            "signal-kind": resolve_signal_kind(ev)
         }
         response = requests.post(url, json=data, headers=headers)
 
