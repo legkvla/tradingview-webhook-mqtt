@@ -10,7 +10,7 @@ from urllib.parse import urlparse
 # run by Heroku (or Docker) with exported vars
 
 SEC_KEY=os.getenv("SEC_KEY", 'DEFAULT_KEY')
-REDIS_URL=os.getenv("REDIS_TLS_URL", '')
+REDIS_URL=os.getenv("REDISCLOUD_URL", '')
 
 def current_milli_time():
     return round(time.time() * 1000)
