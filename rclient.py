@@ -15,7 +15,7 @@ from urllib.parse import urlparse
 load_dotenv()
 
 SEC_KEY=os.getenv("SEC_KEY", 'DEFAULT_KEY')
-REDIS_URL=os.getenv("REDIS_TLS_URL", '')
+REDIS_URL=os.getenv("REDIS_URL", '')
 
 url = urlparse(REDIS_URL)
 r = redis.Redis(host=url.hostname, port=url.port, password=url.password, ssl=True, ssl_cert_reqs=None)
