@@ -3,7 +3,7 @@
 
 # .idea
 /.idea
-
+venv
 # CMake
 cmake-build-debug/
 
@@ -81,3 +81,9 @@ coverage.xml
 .env.bak
 
 deps
+
+# Secrets
+.env
+ssl/
+*.key
+*.crt

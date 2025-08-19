@@ -14,11 +14,21 @@ REDIS_URL=os.getenv("REDIS_URL", '')
 
 def current_milli_time():
     return round(time.time() * 1000)
-
+print("SStarting app")
 app = FastAPI()
 
 url = urlparse(REDIS_URL)
-r = redis.Redis(host=url.hostname, port=url.port, password=url.password, ssl=True, ssl_cert_reqs=None)
+#r = redis.Redis(host=url.hostname, port=url.port, password=url.password, ssl=False, ssl_cert_reqs=None)
+r = redis.Redis(
+    host=url.hostname, 
+    port=url.port, 
+    password=url.password, 
+    ssl=True, 
+    ssl_cert_reqs=None,  # For self-signed certs
+    ssl_ca_certs='./ssl/ca.crt',  # Path to CA certificate
+    decode_responses=True
+)
+
 
 @app.get("/")
 async def root():

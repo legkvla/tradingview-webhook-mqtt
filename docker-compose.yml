@@ -1,0 +1,9 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - SEC_KEY=${SEC_KEY}
+      - REDIS_URL=redis://:${REDIS_PASSWORD}@213.58.150.82:1380
+    restart: unless-stopped
