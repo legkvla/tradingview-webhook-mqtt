@@ -56,3 +56,4 @@ while i > 0:
   print(response.text)
   print(f"Average HTTP success in : {average_elapsed:.2f}")
   i = i + 1
+  time.sleep(1)
